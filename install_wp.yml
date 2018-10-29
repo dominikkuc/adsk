@@ -2,31 +2,36 @@
 - hosts: wordpress_nodes
   become: yes
   tasks:
-    - name: "Create HelloWorld file"
-      file:
-        path: ~/HelloWorld
-        state: touch
-    - name: "Install http server"
-      yum:
-        name: httpd
-        state: latest
-    - name: "Install MariaDB"
+    - name: "Install packages"
       yum:
         name: "{{packages}}"
         state: present
       vars:
         packages:
+          - httpd
           - mariadb
           - mariadb-server
-    - name: "Install PHP"
-      yum:
-        name: "{{packages}}"
-        state: present
-      vars:
-        packages:
           - php
           - php-mysql
-    - name: "Wordpress"
+          - MySQL-python
+    - name: "Download Wordpress"
       get_url:
         url: https://wordpress.org/latest.zip
-        dest: /var/www
+        dest: /tmp/wp.zip
+    - name: "Unpack wordpress"
+      unarchive:
+        src: /tmp/wp.zip
+        dest: /var/www/
+        remote_src: yes
+    - name: "Start MariaDB"
+      service:
+        name: "{{services}}"
+        state: started
+      vars:
+        services:
+          - httpd
+          - mariadb
+    - name: "Add database for wordpress"
+      mysql_db:
+        name: wp_db
+        state: present
