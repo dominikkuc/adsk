@@ -1,0 +1,32 @@
+---
+- hosts: wordpress_nodes
+  become: yes
+  tasks:
+    - name: "Create HelloWorld file"
+      file:
+        path: ~/HelloWorld
+        state: touch
+    - name: "Install http server"
+      yum:
+        name: httpd
+        state: latest
+    - name: "Install MariaDB"
+      yum:
+        name: "{{packages}}"
+        state: present
+      vars:
+        packages:
+          - mariadb
+          - mariadb-server
+    - name: "Install PHP"
+      yum:
+        name: "{{packages}}"
+        state: present
+      vars:
+        packages:
+          - php
+          - php-mysql
+    - name: "Wordpress"
+      get_url:
+        url: https://wordpress.org/latest.zip
+        dest: /var/www
