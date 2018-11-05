@@ -1,0 +1,30 @@
+---
+- name: "Download Wordpress"
+  get_url:
+    url: https://wordpress.org/latest.zip
+    dest: /tmp/wp.zip
+- name: "Unpack wordpress"
+  unarchive:
+    src: /tmp/wp.zip
+    dest: /var/www/
+    remote_src: yes
+- name: "Start MariaDB"
+  service:
+    name: mariadb
+    state: started
+- name: "Add database for wordpress"
+  mysql_db:
+    name: wp_db
+    state: present
+- name: "Copy http config for wordpress"
+  template:
+    src: templates/wp_http.config
+    dest: /etc/httpd/conf.d/blog.conf
+- name: "Copy http config for wordpress"
+  copy:
+    src: templates/wp-config.php
+    dest: /var/www/wordpress/wp-config.php
+- name: "Start web server"
+  service:
+    name: httpd
+    state: restarted

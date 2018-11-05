@@ -1,37 +1,8 @@
 ---
 - hosts: wordpress_nodes
   become: yes
+  vars:
+    wordpress_path: /var/www/wordpress
   tasks:
-    - name: "Install packages"
-      yum:
-        name: "{{packages}}"
-        state: present
-      vars:
-        packages:
-          - httpd
-          - mariadb
-          - mariadb-server
-          - php
-          - php-mysql
-          - MySQL-python
-    - name: "Download Wordpress"
-      get_url:
-        url: https://wordpress.org/latest.zip
-        dest: /tmp/wp.zip
-    - name: "Unpack wordpress"
-      unarchive:
-        src: /tmp/wp.zip
-        dest: /var/www/
-        remote_src: yes
-    - name: "Start MariaDB"
-      service:
-        name: "{{services}}"
-        state: started
-      vars:
-        services:
-          - httpd
-          - mariadb
-    - name: "Add database for wordpress"
-      mysql_db:
-        name: wp_db
-        state: present
+    - include_tasks: tasks/os-dependencies.yml
+    - include_tasks: tasks/install-wordpress.yml
