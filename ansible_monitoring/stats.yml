@@ -1,0 +1,5 @@
+---
+- hosts: petrics_source
+  become: yes
+  tasks:
+    - include_tasks: tasks/os-dependencies.yml
