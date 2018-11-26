@@ -1,0 +1,15 @@
+---
+- name: "Start MariaDB"
+  service:
+    name: mariadb
+    state: started
+- name: "Create databas user"
+  mysql_user:
+    name: wordpress
+    password: MatiGlita123
+    priv: '*.*:ALL'
+    state: present
+- name: "Add database for wordpress"
+  mysql_db:
+    name: wp_db
+    state: present

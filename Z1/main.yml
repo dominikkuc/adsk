@@ -1,0 +1,16 @@
+---
+- hosts: public_nodes
+  become: yes
+  vars:
+    wordpress_path: /var/www/wordpress
+    private_node_ip: 172.31.19.238
+  tasks:
+    - include_tasks: tasks/public/os-dependencies.yml
+    - include_tasks: tasks/public/install-wordpress.yml
+- hosts: private_nodes
+  become: yes
+  vars:
+    public_node_ip: 172.31.23.53
+  tasks:
+    - include_tasks: tasks/private/os-dependencies.yml
+    - include_tasks: tasks/private/create-wordpress-database.yml
