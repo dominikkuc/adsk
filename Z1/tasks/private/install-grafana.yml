@@ -1,0 +1,9 @@
+---
+- name: "Install Grafana"
+  yum:
+    name: "{{grafana_url}}"
+    state: present
+- name: "Start Grafana"
+  service:
+    name: "grafana-server"
+    state: started

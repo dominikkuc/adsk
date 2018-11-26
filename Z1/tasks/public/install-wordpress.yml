@@ -10,11 +10,11 @@
     remote_src: yes
 - name: "Copy http config for wordpress"
   template:
-    src: templates/wp_http.config
+    src: templates/public/wp_http.config
     dest: /etc/httpd/conf.d/blog.conf
-- name: "Copy http config for wordpress"
+- name: "Copy wordpress config"
   template:
-    src: templates/wp-config.php
+    src: templates/public/wp-config.php
     dest: /var/www/wordpress/wp-config.php
 - name: "Start web server"
   service:

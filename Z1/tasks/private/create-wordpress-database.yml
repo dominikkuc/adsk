@@ -3,11 +3,12 @@
   service:
     name: mariadb
     state: started
-- name: "Create databas user"
+- name: "Create database user"
   mysql_user:
     name: wordpress
     password: MatiGlita123
     priv: '*.*:ALL'
+    host: '%'
     state: present
 - name: "Add database for wordpress"
   mysql_db:
