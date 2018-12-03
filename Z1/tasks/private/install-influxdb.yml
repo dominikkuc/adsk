@@ -1,0 +1,12 @@
+---
+- name: "Install InfluxDB"
+  yum:
+    name: "{{influxdb_url}}"
+    state: present
+- name: "Start InfluxDB"
+  service:
+    name: "influxdb"
+    state: restarted
+- name: "Create metrics database"
+  influxdb_database:
+      database_name: "metrics"
