@@ -3,7 +3,11 @@
   yum:
     name: "{{grafana_url}}"
     state: present
+- name: "Copy Grafana config"
+  template:
+    src: templates/public/grafana.ini
+    dest: /etc/grafana/grafana.ini
 - name: "Start Grafana"
   service:
     name: "grafana-server"
-    state: started
+    state: restarted

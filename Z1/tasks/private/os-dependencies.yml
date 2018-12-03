@@ -8,3 +8,7 @@
       - mariadb
       - mariadb-server
       - MySQL-python
+      - python-pip
+- name: "Install python packages"
+  pip:
+    name: influxdb

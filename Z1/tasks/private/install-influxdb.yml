@@ -7,3 +7,6 @@
   service:
     name: "influxdb"
     state: restarted
+- name: "Create metrics database"
+  influxdb_database:
+      database_name: "metrics"

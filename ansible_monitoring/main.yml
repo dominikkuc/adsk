@@ -37,7 +37,18 @@
         name: "influxdb"
         state: restarted
 - hosts: metrics_graph
+  become: yes
+  vars:
+    grafana_url: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4-1.x86_64.rpm
   tasks:
     - name: "Test Graph"
       debug:
         msg: "Graph OK"
+    - name: "Install Grafana"
+      yum:
+        name: "{{grafana_url}}"
+        state: present
+    - name: "Start Grafana"
+      service:
+        name: "grafana-server"
+        state: started
