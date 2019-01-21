@@ -19,7 +19,7 @@
     grafana_password: "admin"
     org_id: "1"
     ds_type: "influxdb"
-    url: "http://{{private_node_ip}}:8086"
+    url: "http://{{stats_node_ip}}:8086"
     database: "metrics"
     is_default: yes
     tls_skip_verify: yes
