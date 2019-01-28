@@ -1,0 +1,15 @@
+
+- name: "Copy NGINX config"
+  template:
+    src: proxy/load-balancer.conf
+    dest: /etc/nginx/conf.d/load-balancer.conf
+- name: "Start NGINX"
+  service:
+    name: nginx
+    state: restarted
+#- name: "Install Certbot"
+#  yum:
+#    name: python2-certbot-nginx
+#    state: present
+#- name: "Configure Certbox certificate"
+#  shell: 'certbot -n -i nginx -d "adsk.ml" --nginx -m "jakubszkarlat@gmail.com" --agree-tos --redirect'
