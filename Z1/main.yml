@@ -1,9 +1,9 @@
 ---
-- hosts: public_nodes
+- hosts: app_nodes
   become: yes
   vars:
     wordpress_path: /var/www/wordpress
-    private_node_ip: 172.31.22.232
+    stats_node_ip: 172.31.18.47
     telegraf_url: https://dl.influxdata.com/telegraf/releases/telegraf-1.8.3-1.x86_64.rpm
     grafana_url: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4-1.x86_64.rpm
   tasks:
@@ -11,12 +11,17 @@
     - include_tasks: tasks/public/install-wordpress.yml
     - include_tasks: tasks/public/install-telegraf.yml
     - include_tasks: tasks/public/install-grafana.yml
-- hosts: private_nodes
+- hosts: stats_nodes
   become: yes
   vars:
-    public_node_ip: 172.31.19.206
     influxdb_url: https://dl.influxdata.com/influxdb/releases/influxdb-1.7.1.x86_64.rpm
   tasks:
     - include_tasks: tasks/private/os-dependencies.yml
     - include_tasks: tasks/private/create-wordpress-database.yml
     - include_tasks: tasks/private/install-influxdb.yml
+- hosts: proxy_nodes
+  become: yes
+  vars:
+  tasks:
+    - include_tasks: tasks/proxy/os-dependencies.yml
+    - include_tasks: tasks/proxy/configure-nginx-proxy.yml
