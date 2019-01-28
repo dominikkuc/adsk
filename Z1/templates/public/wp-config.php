@@ -29,7 +29,7 @@ define('DB_USER', 'wordpress');
 define('DB_PASSWORD', 'MatiGlita123');
 
 /** MySQL hostname */
-define('DB_HOST', '{{stats_node_ip}}');
+define('DB_HOST', '{{private_node_ip}}');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
