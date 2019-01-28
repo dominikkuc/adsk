@@ -1,0 +1,14 @@
+---
+- name: "Add EPEL repository"
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+- name: "Install NGINX"
+  yum:
+    name: nginx
+    state: latest
+
+- name: "Start NGINX"
+  service:
+    name: nginx
+    state: started
